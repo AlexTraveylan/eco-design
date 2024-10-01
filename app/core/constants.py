@@ -21,4 +21,4 @@ CORE_DIR = APP_DIR / "core"
 
 LOGGING_CONFIG_PATH = ADAPTERS_DIR / "logger" / "config_log.json"
 
-LOGGER_NAME = "app_logger"  # modify this to change the logger name
+LOGGER_NAME = "eco_design_logger"
