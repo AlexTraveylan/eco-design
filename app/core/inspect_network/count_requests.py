@@ -1,6 +1,5 @@
 from playwright.sync_api import sync_playwright
 
-from app.adapter.exception.app_exception import AnalyseMustBeDoneFirstError
 from app.core.inspect_network.schemas import NetworkRequest
 
 
@@ -12,7 +11,7 @@ class InspectNetWork:
         self._css_requests: int = 0
         self._is_analysed: bool = False
 
-    def analyse(self) -> None:
+    def _analyse(self) -> None:
         if self._is_analysed is True:
             return
 
@@ -33,7 +32,7 @@ class InspectNetWork:
 
     def get_result(self) -> NetworkRequest:
         if self._is_analysed is False:
-            raise AnalyseMustBeDoneFirstError("use InspectNetWork.analyse() before")
+            self._analyse()
 
         return NetworkRequest(
             total=self._total_requests,
@@ -48,10 +47,3 @@ class InspectNetWork:
             self._js_requests += 1
         elif request.resource_type == "stylesheet":
             self._css_requests += 1
-
-
-# Exemple d'utilisation
-url_to_analyze = "https://www.francetravail.fr/accueil"
-inpect = InspectNetWork(url=url_to_analyze)
-inpect.analyse()
-print(inpect.get_result())
