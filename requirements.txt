@@ -4,3 +4,5 @@ pydantic
 playwright
 pillow
 openpyxl
+setuptools 
+playwright-stealth

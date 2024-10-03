@@ -24,6 +24,7 @@ The `tests` directory contains unit, integration, and end-to-end tests.
 
 ```sh
 pip install -r dev_requirements.txt
+playwright install 
 ```
 
 ### Running the Application
