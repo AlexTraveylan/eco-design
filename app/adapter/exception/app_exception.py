@@ -30,3 +30,11 @@ class AppError(Exception):
 
     def __str__(self):
         return self.message
+
+
+class GoogleInsightError(AppError):
+    pass
+
+
+class ParsingError(GoogleInsightError):
+    pass
