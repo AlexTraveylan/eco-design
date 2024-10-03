@@ -59,3 +59,14 @@ class EcoindexError(AppError):
 
 class EcoindexScraperStatusError(EcoindexError):
     pass
+
+
+# Inspect Network
+
+
+class InspectNetworkError(AppError):
+    pass
+
+
+class AnalyseMustBeDoneFirstError(AppError):
+    pass
