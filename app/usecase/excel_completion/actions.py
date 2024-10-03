@@ -59,22 +59,22 @@ def copy_sheet(
 def create_excel_from_template(
     template_path: Path, output_path: str, urls: List[str]
 ) -> None:
-    # Ouvrir le template
+    # Open the template
     template_wb: Workbook = openpyxl.load_workbook(template_path)
 
-    # Créer un nouveau workbook
+    # Create a new workbook
     new_wb: Workbook = openpyxl.Workbook()
-    new_wb.remove(new_wb.active)  # Supprimer la feuille par défaut
+    new_wb.remove(new_wb.active)
 
-    # Copier la feuille "Synthèse" sans la modifier
+    # Copy the "Synthèse" sheet without modifying it
     synth_sheet = template_wb[SYNTHESE_PAGE_NAME]
     copy_sheet(synth_sheet, new_wb, SYNTHESE_PAGE_NAME)
 
-    # Copier la feuille "Liste" sans la modifier
+    # Copy the "Liste" sheet without modifying it
     list_sheet = template_wb[LIST_PAGE_NAME]
     copy_sheet(list_sheet, new_wb, LIST_PAGE_NAME)
 
-    # Pour chaque URL, créer une nouvelle feuille basée sur "Page 1" du template
+    # For each URL, create a new sheet based on "Page 1" from the template
     for i, url in enumerate(urls, start=1):
         logger.info("Analyse de la page %s ...", url)
         new_sheet_name: str = f"page {i}"
@@ -86,7 +86,7 @@ def create_excel_from_template(
         eco_index = asyncio.run(EcoindexScraper(url=url).get_page_analysis())
         logger.info("Eco index obtenu ...")
 
-        inpect = InspectNetWork(url=url).get_result()
+        inspect = InspectNetWork(url=url).get_result()
         logger.info("Inspection du network completée ....")
 
         # url / date
@@ -95,7 +95,7 @@ def create_excel_from_template(
 
         # Green IT Analysis
         new_wb[new_sheet_name]["B12"] = eco_index.ges
-        new_wb[new_sheet_name]["B13"] = eco_index.size
+        new_wb[new_sheet_name]["B13"] = f"{eco_index.size / 1000:.2f}"
         new_wb[new_sheet_name]["B14"] = eco_index.nodes
         new_wb[new_sheet_name]["B15"] = eco_index.requests
 
@@ -103,28 +103,29 @@ def create_excel_from_template(
         new_wb[new_sheet_name]["B18"] = insight.performance
         new_wb[new_sheet_name]["B19"] = f"{insight.first_contentful_paint / 1000:.2f}"
         new_wb[new_sheet_name]["C19"] = (
-            f"Largest contentful paint : {insight.largest_contentful_paint} s"
+            f"Largest contentful paint : {insight.largest_contentful_paint / 1000:.2f} s"
         )
         new_wb[new_sheet_name]["B20"] = f"{insight.total_blocking_time / 1000:.2f}"
         new_wb[new_sheet_name]["B21"] = f"ok, {insight.speed_index} ms"
 
         # Réseau
-        new_wb[new_sheet_name]["B24"] = inpect.total
-        new_wb[new_sheet_name]["B25"] = inpect.js
-        new_wb[new_sheet_name]["B26"] = inpect.css
+        new_wb[new_sheet_name]["B24"] = inspect.total
+        new_wb[new_sheet_name]["B25"] = inspect.js
+        new_wb[new_sheet_name]["B26"] = inspect.css
 
         logger.info("Page %s pour l'url %s ajoutée", i, url)
 
-    # Sauvegarder le nouveau workbook
     new_wb.save(output_path)
 
 
-# Exemple d'utilisation
-output_path = get_output_path()
-urls: List[str] = [
-    "https://www.francetravail.fr/accueil",
-    "https://www.alextraveylan.fr/fr",
-    "https://it-wars.com/",
-]
+if __name__ == "__main__":
+    # Usage example
 
-create_excel_from_template(TEMPLATE_PATH, output_path, urls)
+    output_path = get_output_path()
+    urls: List[str] = [
+        "https://www.francetravail.fr/accueil",
+        "https://www.alextraveylan.fr/fr",
+        "https://it-wars.com/",
+    ]
+
+    create_excel_from_template(TEMPLATE_PATH, output_path, urls)
