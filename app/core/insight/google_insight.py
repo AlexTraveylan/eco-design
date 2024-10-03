@@ -44,7 +44,12 @@ class Insight(ABC):
             locale=self.locale,
         )
 
-        response = requests.get(api_url)
+        try:
+            response = requests.get(api_url)
+        except requests.exceptions.ConnectionError as e:
+            raise ConnectionError(
+                "Connection fail, check your network permissions"
+            ) from e
 
         if response.status_code != 200:
             raise GoogleInsightError(f"Erreur {response.status_code}: {response.text}")

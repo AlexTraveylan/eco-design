@@ -32,6 +32,10 @@ class AppError(Exception):
         return self.message
 
 
+class ConnectionError(AppError):
+    pass
+
+
 class GoogleInsightError(AppError):
     pass
 
