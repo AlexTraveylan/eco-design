@@ -6,7 +6,7 @@ import logging
 from atexit import register
 
 from app.core.constants import LOGGER_NAME
-from app.core.insight.google import MobileInsight
+from app.core.insight.google_insight import MobileInsight
 
 logger = logging.getLogger(LOGGER_NAME)
 
