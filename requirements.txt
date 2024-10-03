@@ -1,3 +1,5 @@
 pydantic-settings
 requests
 pydantic
+playwright
+pillow

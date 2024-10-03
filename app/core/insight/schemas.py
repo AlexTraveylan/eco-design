@@ -16,10 +16,14 @@ class InsightContent(BaseModel):
     seo : int
         Score 0-100
     first_contentful_paint : int
+        Unit : ms
     largest_contentful_paint : int
+        Unit : ms
     total_blocking_time : int
+        Unit : ms
     cumulative_layout_shift : float
     speed_index : int
+        Unit : ms
     """
 
     performance: int

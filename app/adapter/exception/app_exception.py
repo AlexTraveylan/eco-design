@@ -32,8 +32,14 @@ class AppError(Exception):
         return self.message
 
 
+# Request errors
+
+
 class ConnectionError(AppError):
     pass
+
+
+# Google insight errors
 
 
 class GoogleInsightError(AppError):
@@ -41,4 +47,15 @@ class GoogleInsightError(AppError):
 
 
 class ParsingError(GoogleInsightError):
+    pass
+
+
+# EcoIndex errors
+
+
+class EcoindexError(AppError):
+    pass
+
+
+class EcoindexScraperStatusError(EcoindexError):
     pass
