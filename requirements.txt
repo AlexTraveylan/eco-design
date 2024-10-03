@@ -3,3 +3,4 @@ requests
 pydantic
 playwright
 pillow
+openpyxl
