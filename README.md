@@ -1,91 +1,149 @@
-# Eco Design
+# 🌿 Eco Design
 
-## Description
+## 📝 Description
 
-https://developers.google.com/speed/docs/insights/v5/get-started?hl=fr
+Eco Design is a toolkit for analyzing the ecodesign of websites, incorporating:
+- 🚀 Google PageSpeed Insights
+- 🌍 Ecoindex
+- 🔍 Network Request Analysis
 
-## Project Structure
+### 🚀 Google PageSpeed Insights
 
-The main application code is located in the `app` directory, with the entry point in `app/main.py`. The `app` directory also contains a `core` subdirectory for core functionality and an `adapter` subdirectory for adapters.
+Utilizes the Google PageSpeed Insights API to evaluate website performance.
+[API Documentation](https://developers.google.com/speed/docs/insights/v5/get-started?hl=fr)
 
-The `tests` directory contains unit, integration, and end-to-end tests.
+### 🌍 Ecoindex
 
-## Setup
+Employs Playwright to scrape websites and calculate their Ecoindex score.
+Adapted from [ecoindex_python](https://github.com/cnumr/ecoindex_python).
 
-### Requirements
+### 🔍 Network Request Analysis
 
-- Python 3.10
+Leverages Playwright to examine network requests made by the website.
+
+## 🏗️ Project Structure
+
+### Core Components
+
+#### Google Insight
+
+```python
+from app.core.insight.google_insight import MobileInsight, DesktopInsight
+
+url = "https://www.alextraveylan.fr"
+
+# Mobile Insight
+mobile_insight = MobileInsight(url)
+print(mobile_insight.get_result())
+# Output: performance=85 accessibility=100 best_practices=96 seo=100 ...
+
+# Desktop Insight
+desktop_insight = DesktopInsight(url)
+print(desktop_insight.get_result())
+# Output: performance=99 accessibility=100 best_practices=100 seo=100 ...
+```
+
+#### Ecoindex
+
+```python
+from app.core.eco_index.scraper import EcoindexScraper
+
+
+url = "https://www.alextraveylan.fr"
+
+eco_index = asyncio.run(EcoindexScraper(url=url).get_page_analysis())
+print(eco_index)
+# Output: width=1920 height=1080 url='https://www.alextraveylan.fr/' ...
+```
+
+#### Network Requests
+
+```python
+from app.core.inspect_network.count_requests import InspectNetwork
+
+url = "https://www.alextraveylan.fr"
+
+inspect = InspectNetwork(url=url)
+print(inspect.get_result())
+# Output: total=32 js=19 css=1
+```
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+- Python 3.10+
 - pip
 
 ### Installation
 
-1. Clone the repository.
-2. Install the dependencies:
+1. Clone the repository
+2. Set up a virtual environment:
+   ```sh
+   python -m venv env
+   ```
+3. Install dependencies:
+   ```sh
+   pip install -r dev_requirements.txt
+   ```
+4. Install Playwright browsers:
+   ```sh
+   playwright install
+   ```
 
-```sh
-pip install -r dev_requirements.txt
-playwright install 
-```
+### Usage
 
-### Running the Application
-
-To run the application:
-
+Run the application:
 ```sh
 python app/main.py
 ```
 
-### Running the Tests
-
-To run the tests:
-
+Execute tests:
 ```sh
 pytest
 ```
 
-## Development
+## 🛠️ Development
 
-This project is configured for development in Visual Studio Code with settings for the Python extension, including formatting and linting settings. The `.vscode` directory contains the configuration files.
+This project is configured for Visual Studio Code with Python extension settings for formatting and linting. Configuration files are located in the `.vscode` directory.
 
-## Docker
+## 🐳 Docker
 
-A Dockerfile is included for building a Docker image of the application. To build the image:
-
+Build the Docker image:
 ```sh
-docker build -t <image-name> .
+docker build -t eco-design .
 ```
 
-To run the application in a Docker container:
-
+Run the container:
 ```sh
-docker run -p 80:80 <image-name>
+docker run -p 80:80 eco-design
 ```
 
-## Continuous Integration
+## 🔄 Continuous Integration
 
-The project includes a GitHub Actions workflow for continuous integration, which runs tests and security checks on push and pull request events to the main branch.
+GitHub Actions workflow is set up for CI, running tests and security checks on push and pull request events to the main branch.
 
-## Logging
+## 📊 Logging
 
-The application uses Python's built-in logging module, with configuration in `app/adapter/logger/config_log.json`.
+Logging is configured using Python's built-in logging module. Configuration file: `app/adapter/logger/config_log.json`.
 
-## package
+## 📦 Packaging
 
-To create the package, run the following command:
+Create the package:
 ```bash
 python setup.py sdist bdist_wheel
 ```
 
-The package is available on whl file in the dist folder. To install it, run the following command:
+Install the package:
 ```bash
-pip install dist/<app-name>-0.1-py3-none-any.whl
+pip install dist/ecodesign-0.1-py3-none-any.whl
 ```
-Note : 0.1 is the version of the package, change it if needed.
+Note: Replace `0.1` with the current version number.
 
-## Contributing
+## 🤝 Contributing
 
-Contributions are welcome. Please submit a pull request or create an issue to discuss the changes.
+Contributions are welcome! Please submit a pull request or create an issue to discuss proposed changes.
 
-## License
+## 📄 License
 
-[MIT](LICENSE)
+This project is licensed under the [MIT License](LICENSE).
