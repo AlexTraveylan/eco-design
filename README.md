@@ -48,12 +48,11 @@ print(desktop_insight.get_result())
 ```python
 from app.core.eco_index.scraper import EcoindexScraper
 
-
 url = "https://www.alextraveylan.fr"
 
 eco_index = asyncio.run(EcoindexScraper(url=url).get_page_analysis())
 print(eco_index)
-# Output: width=1920 height=1080 url='https://www.alextraveylan.fr/' ...
+# Output: size=296.448 nodes=386 requests=30 grade=<Grade.B: 'B'> score=75.0 ges=1.5 water=2.25 ...
 ```
 
 #### Network Requests
@@ -91,12 +90,36 @@ print(inspect.get_result())
    playwright install
    ```
 
-### Usage
+### Usages
 
-Run the application:
+#### Try the application
+
 ```sh
 python app/main.py
 ```
+
+#### UseCase 1 : Complete a excel template
+
+```python
+from app.usecase.excel_completion.actions import create_excel_from_template
+from app.usecase.excel_completion.files_infos import (
+    TEMPLATE_PATH,
+    get_output_path,
+)
+
+output_path = get_output_path()
+urls: List[str] = [
+    "https://www.francetravail.fr/accueil",
+    "https://www.alextraveylan.fr/fr",
+    "https://it-wars.com/",
+]
+
+create_excel_from_template(TEMPLATE_PATH, output_path, urls)
+
+# A file will be create here : app/usecase/excel_completion/data/output
+```
+
+### Tests
 
 Execute tests:
 ```sh
