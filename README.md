@@ -119,6 +119,100 @@ create_excel_from_template(TEMPLATE_PATH, output_path, urls)
 # A file will be create here : app/usecase/excel_completion/data/output
 ```
 
+### Entrypoints
+
+#### CLI
+
+##### Insight
+
+- Commande
+
+```sh
+# Général (strategy : desktop or mobile)
+python .\app\entrypoint\cli\main.py insight [URL] [strategy]
+# Exemple
+python .\app\entrypoint\cli\main.py insight https://www.alextraveylan.fr/fr desktop 
+```
+- Output
+
+```sh
+[INFO|setup_logging|L39] 2024-10-07T09:36:48+0200: Logger initialized.
+{
+    'performance': 99,
+    'accessibility': 100,
+    'best_practices': 100,
+    'seo': 100,
+    'first_contentful_paint': 218,
+    'largest_contentful_paint': 401,
+    'total_blocking_time': 87,
+    'cumulative_layout_shift': 0.0,
+    'speed_index': 1091
+}
+```
+
+##### Eco-design
+
+- Commande
+
+```sh
+# Général
+python .\app\entrypoint\cli\main.py eco-design [URL]
+# Exemple
+python .\app\entrypoint\cli\main.py eco-design https://www.alextraveylan.fr/fr 
+```
+
+- Output
+
+```sh
+[INFO|setup_logging|L39] 2024-10-07T09:37:18+0200: Logger initialized.
+{
+    'url': 'https://www.alextraveylan.fr/fr',
+    'size': 297.026,
+    'nodes': 386,
+    'requests': 29,
+    'grade': <Grade.B: 'B'>,
+    'score': 76.0,
+    'ges': 1.48,
+    'water': 2.22,
+    'date': datetime.datetime(2024, 10, 7, 9, 37, 21, 605695),
+    'page_type': None
+}
+```
+
+##### Network
+
+- Commande
+
+```sh
+# Général
+python .\app\entrypoint\cli\main.py network [URL]
+# Exemple
+python .\app\entrypoint\cli\main.py network https://www.alextraveylan.fr/fr 
+```
+
+- Output
+
+```sh
+[INFO|setup_logging|L39] 2024-10-07T09:37:18+0200: Logger initialized.
+{'total': 31, 'js': 19, 'css': 1}
+```
+
+##### Complete-excel
+
+- Commande
+
+```sh
+# Général
+python .\app\entrypoint\cli\main.py complete-excel [URLS...]
+# Exemple
+python .\app\entrypoint\cli\main.py complete-excel https://www.alextraveylan.fr/fr https://it-wars.com
+```
+
+- Output
+
+Should open the created excel file.
+
+
 ### Tests
 
 Execute tests:

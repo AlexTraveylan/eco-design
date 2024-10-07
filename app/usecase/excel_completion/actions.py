@@ -1,5 +1,7 @@
 import asyncio
 import logging
+import os
+import sys
 from datetime import datetime
 from pathlib import Path
 from typing import List
@@ -8,6 +10,7 @@ import openpyxl
 from openpyxl.workbook.workbook import Workbook
 from openpyxl.worksheet.worksheet import Worksheet
 
+from app.adapter.exception.app_exception import AppError
 from app.core.constants import LOGGER_NAME
 from app.core.eco_index.scraper import EcoindexScraper
 from app.core.insight.google_insight import MobileInsight
@@ -20,6 +23,19 @@ from app.usecase.excel_completion.files_infos import (
 )
 
 logger = logging.getLogger(LOGGER_NAME)
+
+
+def open_excel_file(fichier: Path | str) -> None:
+    fichier = str(fichier)
+    try:
+        if sys.platform == "win32":
+            os.startfile(fichier)
+        elif sys.platform == "darwin":
+            os.system(f"open {fichier}")
+        else:
+            os.system(f"xdg-open {fichier}")
+    except Exception as e:
+        raise AppError("Cannot open excel file") from e
 
 
 def copy_sheet(

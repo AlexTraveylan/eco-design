@@ -6,3 +6,4 @@ pillow
 openpyxl
 setuptools 
 playwright-stealth
+typer

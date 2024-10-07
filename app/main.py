@@ -27,8 +27,8 @@ def main():
     eco_index = asyncio.run(EcoindexScraper(url=url).get_page_analysis())
     print("\nEcoindex:\n", eco_index)
 
-    inpect = InspectNetWork(url=url)
-    print("\nNetwork requests:\n", inpect.get_result(), "\n")
+    inspect = InspectNetWork(url=url)
+    print("\nNetwork requests:\n", inspect.get_result(), "\n")
 
 
 @register
